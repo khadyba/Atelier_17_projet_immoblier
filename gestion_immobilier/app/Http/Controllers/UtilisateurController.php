@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Utilisateurs;
 use Illuminate\Http\Request;
 
 class UtilisateurController extends Controller
@@ -11,7 +12,7 @@ class UtilisateurController extends Controller
      */
     public function index()
     {
-        return view('Compte.creerCompte');
+        return view('Articles.PageAcceuil');
     }
 
     /**
@@ -19,16 +20,32 @@ class UtilisateurController extends Controller
      */
     public function create()
     {
-        //
+        
+        return view('Compte.creerCompte');
     }
 
     /**
      * Store a newly created resource in storage.
      */
+    
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nom' => 'required',
+            'prenom' => 'required',
+            'email' => 'required|email',
+            'motdepasse' => 'required|min:6',
+        ]);
+    
+        $utilisateur = new Utilisateurs($validatedData);
+        $utilisateur->save();
+        // Utilisateurs::create($utilisateur);
+        return back()->with('success', 'Inscription réussie avec succès ! Vous pouvez maintenant vous connecter');
     }
+    
+    
+    
+
 
     /**
      * Display the specified resource.
@@ -41,9 +58,10 @@ class UtilisateurController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit()
     {
-        //
+        
+       return view( 'Compte.seConnecter');
     }
 
     /**
