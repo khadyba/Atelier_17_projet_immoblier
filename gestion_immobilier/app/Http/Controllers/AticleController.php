@@ -11,7 +11,7 @@ class AticleController extends Controller
      */
     public function index()
     {
-        //
+        return view('Articles.PageAcceuil');
     }
 
     /**
@@ -33,9 +33,10 @@ class AticleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
-        //
+       
+        return view('Articles.DetailArticle');
     }
 
     /**

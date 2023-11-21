@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Utilisateurs;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UtilisateurController extends Controller
 {
@@ -12,7 +14,7 @@ class UtilisateurController extends Controller
      */
     public function index()
     {
-        return view('Articles.PageAcceuil');
+        return view('Articles.ajouterArticle');
     }
 
     /**
@@ -30,14 +32,15 @@ class UtilisateurController extends Controller
     
     public function store(Request $request)
     {
+        // dd($request->all());
         $validatedData = $request->validate([
             'nom' => 'required',
             'prenom' => 'required',
             'email' => 'required|email',
-            'motdepasse' => 'required|min:6',
+            'password' => 'required|min:6',
         ]);
     
-        $utilisateur = new Utilisateurs($validatedData);
+        $utilisateur = new User($validatedData);
         $utilisateur->save();
         // Utilisateurs::create($utilisateur);
         return back()->with('success', 'Inscription réussie avec succès ! Vous pouvez maintenant vous connecter');
@@ -64,6 +67,28 @@ class UtilisateurController extends Controller
        return view( 'Compte.seConnecter');
     }
 
+     public function connection(Request $request)
+     {
+        // dd($request->all());    
+        $user = Auth::attempt
+        (
+            [
+                'email' => $request->email, 
+                'password' => $request->motdepasse
+            ]
+        );
+        // dd($user);
+        if (!$user) 
+        {
+            return view('Compte.creerCompte')->with('echouer' ,"veuilez creer un compte");
+            
+        } else
+        {
+            return view('Articles.PageAcceuil');
+            // return view('Compte.creerCompte')->with('echouer' ,"veuilez creer un compte");
+        }
+     }
+     
     /**
      * Update the specified resource in storage.
      */

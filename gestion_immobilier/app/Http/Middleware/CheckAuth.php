@@ -17,7 +17,7 @@ class CheckAuth
     { 
     {
         if (!auth()->check()) {
-            // L'utilisateur n'est pas connecté, redirigez-le vers la page de connexion
+            // L'utilisateur n'est pas connecté, rediregtion vers la page de connexion
             return redirect()->route('Seconnecter')->with('error', 'Vous devez vous connecter pour ajouter un commentaire.');
         }
 
