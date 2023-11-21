@@ -39,6 +39,10 @@ Route::get('/listeartilces', [AticleController::class,'index']);
 Route::get('/articles/detail/{id}', [AticleController::class,'show']);
 Route::get('/commentaire/ajouter/{id}', [CommentaireController::class,'store'])->middleware('auth.check');
 
+Route::get('/deconnexion', [UtilisateurController::class,'deconnexion'])->name('deconnexion');
+
+
+
 
 
 

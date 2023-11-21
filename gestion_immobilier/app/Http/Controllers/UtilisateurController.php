@@ -80,15 +80,23 @@ class UtilisateurController extends Controller
         // dd($user);
         if (!$user) 
         {
-            return view('Compte.creerCompte')->with('echouer' ,"veuilez creer un compte");
+            return back()->with('echouer' ,"veuilez creer un compte");
             
         } else
         {
             return view('Articles.PageAcceuil');
-            // return view('Compte.creerCompte')->with('echouer' ,"veuilez creer un compte");
+         
         }
      }
+
+
+     public function deconnexion()
+     {
+         Auth::logout();
+         return redirect('/listeartilces'); 
      
+
+     }
     /**
      * Update the specified resource in storage.
      */
