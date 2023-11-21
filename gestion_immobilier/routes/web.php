@@ -26,7 +26,7 @@ Route::get('/', function () {
 // })->middleware(['auth', 'verified'])->name('Articles.PageAcceuil');
 
 Route::get('/ajouterArticle', [UtilisateurController::class,'index'])->middleware(['auth','auth.check']);
-
+// route pour se créer un compte
 Route::post('/creerCompte',[UtilisateurController::class,'store']);
 
 Route::get('/creerCompte',[UtilisateurController::class,'create']);
