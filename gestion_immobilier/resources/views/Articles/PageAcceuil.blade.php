@@ -11,11 +11,38 @@
 <h1>
   Listes des Articles 
 </h1>
-
+<style>
+          .grid-container {
+    display: grid;
+    place-items: center;
+    margin-left: 1000px; 
+    height: 10px; 
+    border: 1px 
+    width:50px
+}
+.grid2-container {
+    display: flex;
+    place-items: center;
+    margin-left: 1300px; 
+    height: 10px; 
+    border: 1px 
+    width:50px
+}
+.btn {
+    padding: 5px ; 
+    font-size: 10px;
+    /* margin-left: 500px;  */
+}
+</style>
+<div class="grid-container">
+  <a class="btn btn-primary" href="/Seconnecter">Se Connecter</a>
+</div>
+{{-- <div class="grid2-container">
+  <a class="btn btn-primary" href="/creerCompte">Créer Un Compte</a>
+</div> --}}
 
 <div class="container my-4">
   <div class="row d-flex ">
-      
           <div class="col-md-4">
               <div class="card mb-2 d-flex">
                   <h3 class="card-header"style="color: black" ></h3>

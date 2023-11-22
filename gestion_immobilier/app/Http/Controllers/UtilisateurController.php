@@ -53,9 +53,9 @@ class UtilisateurController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
-        //
+        return view('Articles.bizaimmoblier');
     }
 
     /**
@@ -77,7 +77,6 @@ class UtilisateurController extends Controller
                 'password' => $request->motdepasse
             ]
         );
-        // dd($user);
         if (!$user) 
         {
             return back()->with('echouer' ,"veuilez creer un compte");

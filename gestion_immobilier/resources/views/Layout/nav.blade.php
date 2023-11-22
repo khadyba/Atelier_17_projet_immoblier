@@ -9,24 +9,24 @@
 </head>
 <body>
     
-<div  class="container">
+
 
     <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Biza Immoblier</a>
+          <a class="navbar-brand" href="/couverture">Biza Immoblier</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav me-auto">
               <li class="nav-item">
-                <a class="nav-link active" href="#">Acceuil
+                <a class="nav-link active" href="/listeartilces">Acceuil
                   <span class="visually-hidden">(current)</span>
                 </a>
               </li>
              
               <li class="nav-item">
-                <a class="nav-link" href="#">Liste Des Article</a>
+                <a class="nav-link" href="/ajouterArticle">Ajouter Article</a>
               </li>
             </ul>
             <form class="d-flex">
@@ -37,7 +37,7 @@
         </div>
       </nav>
 
-</div>
+
 
 
 </body>

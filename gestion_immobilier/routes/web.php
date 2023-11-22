@@ -25,22 +25,27 @@ Route::get('/', function () {
 //     return view('Articles.PageAcceuil');
 // })->middleware(['auth', 'verified'])->name('Articles.PageAcceuil');
 
-Route::get('/ajouterArticle', [UtilisateurController::class,'index'])->middleware(['auth','auth.check']);
+// route pour la coonnection de l'admin
+
+Route::get('/ajouterArticle', [UtilisateurController::class,'index'])->middleware(['auth','isadmin']);
 // route pour se créer un compte
 Route::post('/creerCompte',[UtilisateurController::class,'store']);
-
 Route::get('/creerCompte',[UtilisateurController::class,'create']);
 
+// route pour la connection de l'utilisateurs
 Route::get('/Seconnecter', [UtilisateurController::class,'edit'])->name('Seconnecter');
 Route::post('/connection', [UtilisateurController::class,'connection']);
 
+// route pour lister les articles
 Route::get('/listeartilces', [AticleController::class,'index']);
-
+// route pour les detail d'un aticle
 Route::get('/articles/detail/{id}', [AticleController::class,'show']);
+// route pour ajouter un commenyaire
 Route::get('/commentaire/ajouter/{id}', [CommentaireController::class,'store'])->middleware('auth.check');
-
+// route pour la deconnection de l'utilidateur
 Route::get('/deconnexion', [UtilisateurController::class,'deconnexion'])->name('deconnexion');
-
+// route pour la page de couverture
+Route::get('/couverture',[UtilisateurController::class,'show']);
 
 
 

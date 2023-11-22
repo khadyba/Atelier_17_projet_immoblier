@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Commentaires extends Model
+class Commentaire extends Model
 {
     public function utilisateur() {
-        return $this->belongsTo(User::class);
+        return $this->belongTo(User::class);
     }
     public function article() {
-        return $this->belongsTo(Article::class);
+        return $this->hasMany(User::class);
     }
     use HasFactory;
 }

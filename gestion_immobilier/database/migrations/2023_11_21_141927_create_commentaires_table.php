@@ -13,9 +13,17 @@ return new class extends Migration
     {
         Schema::create('commentaires', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('article_id');
+            $table->unsignedBigInteger('utilisateur_id');
             $table->string('auteur');
             $table->text('contenue');
-            $table->date('datePublication');
+            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
+            $table->foreign('utilisateur_id')->references('id')->on('utilisateurs')->onDelete('cascade');
+
+
+
+        
+
             $table->timestamps();
         });
     }
