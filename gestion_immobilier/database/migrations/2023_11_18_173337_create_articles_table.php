@@ -13,16 +13,14 @@ return new class extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('utilisateur_id');
-            $table->unsignedInteger('commentaire_id');
+            $table->unsignedBigInteger('utilisateur_id');
             $table->string('nom');
-            $table->string('categorie');
-            $table->text('description');
-            $table->date('datePublication');
-            $table->enum('status',['occuper','pas occuper']);
-
+            $table->enum('categorie', ['luxe', 'moyen']);
+            $table->longText('description');
+            $table->string('image');
+            $table->string('adresse');
+            $table->enum('status', ['on', 'off']);
             $table->foreign('utilisateur_id')->references('id')->on('utilisateurs')->onDelete('cascade');
-            $table->foreign('commentaires_id')->references('id')->on('commentraires')->onDelete('cascade');
             $table->timestamps();
         });
     }
