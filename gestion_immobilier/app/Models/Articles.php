@@ -7,11 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Articles extends Model
 {
-    public function utilisateur() {
+    public function utilisateur()
+    {
         return $this->belongsTo(User::class);
     }
-    public function commentaires() {
+    public function commentaires()
+    {
         return $this->hasMany(Commentaire::class);
     }
     use HasFactory;
+    protected $fillable = [
+        'nom',
+        'user_id',
+        'categorie',
+        'description',
+        'image',
+        'status',
+        'adresse'
+    ];
 }

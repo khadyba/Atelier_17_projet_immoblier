@@ -14,7 +14,7 @@ class UtilisateurController extends Controller
      */
     public function index()
     {
-        return view('Articles.ajouterArticle');
+       
     }
 
     /**
@@ -23,7 +23,7 @@ class UtilisateurController extends Controller
     public function create()
     {
         
-        return view('Compte.creerCompte');
+        return view('Compte.FormCreerCompte');
     }
 
     /**
@@ -32,7 +32,7 @@ class UtilisateurController extends Controller
     
     public function store(Request $request)
     {
-        // dd($request->all());
+       
         $validatedData = $request->validate([
             'nom' => 'required',
             'prenom' => 'required',
@@ -41,9 +41,12 @@ class UtilisateurController extends Controller
         ]);
     
         $utilisateur = new User($validatedData);
-        $utilisateur->save();
-        // Utilisateurs::create($utilisateur);
-        return back()->with('success', 'Inscription réussie avec succès ! Vous pouvez maintenant vous connecter');
+        if ($utilisateur->save()) {
+           // Utilisateurs::create($utilisateur);
+        return redirect()->route('user.edit');
+        }
+        
+        
     }
     
     
@@ -59,12 +62,12 @@ class UtilisateurController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for register the user .
      */
     public function edit()
     {
         
-       return view( 'Compte.seConnecter');
+       return view( 'Compte.FormConnexion');
     }
 
      public function connection(Request $request)
@@ -77,25 +80,62 @@ class UtilisateurController extends Controller
                 'password' => $request->motdepasse
             ]
         );
-        if (!$user) 
-        {
-            return back()->with('echouer' ,"veuilez creer un compte");
+        // on recupere les information de l'utilisateur qui se connecte
+        $useRole=User::where('email',$request->email)->get();
+    // on verifie si l'utilsateur existe et est un admin
+       if( $user == true && $useRole[0]->Role === "admin"){
+        return redirect()->route('admin.index');
+       }elseif($user == true && $useRole[0]->email !== "admin"){ // si il existe mais n'est pas admin
+        return redirect()->route('article.home');
+       }else{
+        return back()->with('echouer' ,"veuilez creer un compte");
+       }
+        // if (!$user ) 
+        // {
+        //     return back()->with('echouer' ,"veuilez creer un compte");
             
-        } else
-        {
-            return view('Articles.PageAcceuil');
+        // } else
+        // {
+        //     return redirect()->route('article.home');
          
-        }
+        // }
      }
 
 
      public function deconnexion()
      {
-         Auth::logout();
-         return redirect('/listeartilces'); 
+       
+        if(Auth::logout() === null){
+            return redirect()->route('user.edit'); 
+        }else{
+            return back()->with('success', 'comment tu es arrivé là, voleur sans te connecter');
+        }
+        
      
 
      }
+
+
+     public function deconnexionUserLambda()
+     {
+       
+        if(Auth::logout() === null){
+            return redirect()->route('article.home'); 
+        }else{
+            return back();
+        }
+        
+     
+
+     }
+
+
+
+
+
+
+
+
     /**
      * Update the specified resource in storage.
      */
@@ -104,6 +144,13 @@ class UtilisateurController extends Controller
         //
     }
 
+    public function couverture()
+    {
+        
+        return view('Articles.bizaimmoblier');
+    
+
+    }
     /**
      * Remove the specified resource from storage.
      */

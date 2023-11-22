@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    @include('Layout.nav')
+
+    @extends('AllUsers.nav')
+    @section('title', 'homePage')
+        
+   @section('content')
 
     <style>
         body{
@@ -41,9 +36,8 @@
                 <h1>BIENVENUE SUR BIZA RETROUVEZ LES MEILLEUR OFFRES IMMOBLIER ICI !</h1>
 
                 <div class="grid-container">
-                  <a class="btn btn-primary" href="/listeartilces">CLICQUEZ ICI POUR EXPLORER!</a>
+                  <a class="btn btn-primary" href="{{route('article.index')}}">CLICQUEZ ICI POUR EXPLORER!</a>
               </div>
               
 
-</body>
-</html>
+@endsection
