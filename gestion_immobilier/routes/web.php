@@ -46,7 +46,7 @@ Route::get('/commentaire/ajouter/{id}', [CommentaireController::class,'store'])-
 Route::get('/deconnexion', [UtilisateurController::class,'deconnexion'])->name('deconnexion');
 // route pour la page de couverture
 Route::get('/couverture',[UtilisateurController::class,'show']);
-
+//  on teste les truc
 
 
 
