@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Mail\BienvenueMail;
 use App\Models\Utilisateurs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class UtilisateurController extends Controller
 {
@@ -42,15 +44,17 @@ class UtilisateurController extends Controller
     
         $utilisateur = new User($validatedData);
         if ($utilisateur->save()) {
-           // Utilisateurs::create($utilisateur);
-        return redirect()->route('user.edit');
+            // Envoi de l'e-mail de bienvenue
+            Mail::to($utilisateur->email)->send(new BienvenueMail($utilisateur));
+            // Mail::to($utilisateur->user->email())->send(new BienvenueMail());
+            return redirect()->route('user.edit');
         }
         
         
     }
     
     
-    
+
 
 
     /**

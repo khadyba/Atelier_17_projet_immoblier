@@ -109,9 +109,6 @@ class AticleController extends Controller
             'status' => 'required',
         ]);
         $image = $request->file('image');
-
-
-
         if ($image !== null && !$image->getError()) {
             $article['image'] = $image->store('image', 'public');
         }
