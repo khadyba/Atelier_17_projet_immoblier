@@ -6,6 +6,7 @@ use App\Models\Articles;
 use App\Models\User;
 use App\Models\Utilisateurs;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AticleController extends Controller
 {
@@ -85,7 +86,7 @@ class AticleController extends Controller
     public function edit(string $id)
     {
         $article = Articles::findOrFail($id);
-        $user = User::where('admin', '=', 1)->get();
+        $user = User::where('Role', '=', 'admin')->get();
         $userId = $user[0]->id;
         return view('Admin.Article.updateForm', [
             'userId' => $userId,
@@ -110,10 +111,13 @@ class AticleController extends Controller
         ]);
         $image = $request->file('image');
 
-
+        $article = Articles::findOrFail($id);
 
         if ($image !== null && !$image->getError()) {
-            $article['image'] = $image->store('image', 'public');
+            if ($article->image) {
+                Storage::disk('public')->delete($article->image);
+            }
+            $articleverifier['image'] = $image->store('image', 'public');
         }
         /*if ($request->file('image')) {
             $file = $request->file('image');
@@ -122,7 +126,7 @@ class AticleController extends Controller
             $article['image'] = $filename;
         }*/
 
-        $article = Articles::findOrFail($id);
+
 
         if ($article->update($articleverifier)) {
             return redirect()->route('admin.index')->with('success', 'Le bien a été modifier');
