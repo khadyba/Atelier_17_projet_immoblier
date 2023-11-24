@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Utilisateurs extends Model
 {
 
-    protected $fillable = ['nom', 'prenom', 'email','motdepasse','Role'];
+    protected $fillable = ['nom', 'prenom', 'email','password','Role'];
 
     public function articles() {
         return $this->hasMany(Article::class);

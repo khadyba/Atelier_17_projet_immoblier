@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AticleController;
 use App\Http\Controllers\CommentaireController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UtilisateurController;
 use Illuminate\Support\Facades\Route;
@@ -17,44 +18,51 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+
+
+// route pour la connexion et l'inscription
+
+Route::prefix('authentification')->name('user.')->group(function () {
+    Route::get('/creerCompte', [UtilisateurController::class, 'create'])->name('create');
+    Route::get('/Seconnecter/form', [UtilisateurController::class, 'edit'])->name('edit');
+    Route::post('/connection', [UtilisateurController::class, 'connection'])->name('connection');
+    Route::post('/creerCompte/store', [UtilisateurController::class, 'store'])->name('store');
+    Route::get('/deconnexion', [UtilisateurController::class, 'deconnexion'])->name('deconnexion');
+    Route::get('/deconnexionUserLambda', [UtilisateurController::class, 'deconnexionUserLambda'])->name('deconnexionUserLambda');
 });
 
-// Route::get('/dashboard', function () {
-//     return view('Articles.PageAcceuil');
-// })->middleware(['auth', 'verified'])->name('Articles.PageAcceuil');
-
-Route::get('/ajouterArticle', [UtilisateurController::class,'index'])->middleware(['auth','auth.check']);
-
-Route::post('/creerCompte',[UtilisateurController::class,'store']);
-
-Route::get('/creerCompte',[UtilisateurController::class,'create']);
-
-Route::get('/Seconnecter', [UtilisateurController::class,'edit'])->name('Seconnecter');
-Route::post('/connection', [UtilisateurController::class,'connection']);
-
-Route::get('/listeartilces', [AticleController::class,'index']);
-
-Route::get('/articles/detail/{id}', [AticleController::class,'show']);
-Route::get('/commentaire/ajouter/{id}', [CommentaireController::class,'store'])->middleware('auth.check');
-
-Route::get('/deconnexion', [UtilisateurController::class,'deconnexion'])->name('deconnexion');
+// Route::get('/',[AticleController::class, 'index'])->name('index')->middleware('isadmin');
+// les routes pour l'admin ici
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [AticleController::class, 'index'])->name('index')->middleware(['auth', 'isadmin']);
+    Route::get('/Article/create', [AticleController::class, 'create'])->name('create')->middleware(['auth', 'isadmin']);
+    Route::post('/Article/store', [AticleController::class, 'store'])->name('store')->middleware(['auth', 'isadmin']);
+    Route::get('/Article/editer/{id}', [AticleController::class, 'edit'])->name('edit')->middleware(['auth', 'isadmin']);
+    Route::post('/Article/modifier/{id}', [AticleController::class, 'update'])->name('update')->middleware(['auth', 'isadmin']);
+    Route::post('/Article/supprimer/{id}', [AticleController::class, 'destroy'])->name('destroy')->middleware(['auth', 'isadmin']);
+});
 
 
+//Route pour la vue des articles et de leurs details en form de card accesible a tout le monde
+
+Route::prefix('article')->name('article.')->group(function () {
+    Route::get('/', [HomeController::class, 'homePage'])->name('home');
+
+    Route::get('/listeArticle', [HomeController::class, 'index'])->name('index');
+    Route::get('/detail/{id}', [HomeController::class, 'show'])->name('show');
+});
+// route pour les commentaires
+Route::prefix('commentaires')->name('commentaire.')->group(function () {
+    Route::post('/commentaire/store/', [CommentaireController::class, 'store'])->name('store')->middleware('auth.check');
+    Route::get('/commentaire/edit/{id}', [CommentaireController::class, 'edit'])->name('edit');
+    Route::post('/commentaire/update/{id}', [CommentaireController::class, 'update'])->name('update');
+    Route::post('/commentaire/delete/{id}', [CommentaireController::class, 'destroy'])->name('destroy')->middleware(['auth', 'isadmin']);
+});
 
 
 
 
 
 
-    // Route::get('/acceuil', [UtilisateurController::class, 'index']);
-    // Route::get('/creerCompte',[UtilisateurController::class,'create']);
-    // Route::get('/Seconnecter', [UtilisateurController::class, 'edit']);
-    
-
-    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

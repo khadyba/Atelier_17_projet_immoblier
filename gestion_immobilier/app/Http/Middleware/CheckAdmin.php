@@ -17,12 +17,14 @@ class CheckAdmin
      */
     public function handle($request, Closure $next)
     {
+        
         // Vérifie si l'utilisateur est authentifié et s'il a le rôle d'admin
-        if ($request->user()->isAdmin()) {
-            return $next($request);
-           
+        if ($request->User()->Role !==('admin') ){
+            return redirect()->route('user.edit'); 
+        
         }else{
-         return redirect()->route('creerCompte'); 
+        //  return redirect()->route('creerCompte'); 
+        return $next($request);
         }
      
        
