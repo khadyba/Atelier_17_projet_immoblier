@@ -45,7 +45,7 @@ class UtilisateurController extends Controller
         $utilisateur = new User($validatedData);
         if ($utilisateur->save()) {
             // Envoi de l'e-mail de bienvenue
-            Mail::to($utilisateur->email)->send(new BienvenueMail($utilisateur));
+            // Mail::to($utilisateur->email)->send(new BienvenueMail($utilisateur));
             // Mail::to($utilisateur->user->email())->send(new BienvenueMail());
             return redirect()->route('user.edit');
         }
