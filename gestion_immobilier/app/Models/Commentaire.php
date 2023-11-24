@@ -7,11 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Commentaire extends Model
 {
-    public function utilisateur() {
-        return $this->belongTo(User::class);
+
+    use HasFactory;
+    protected $fillable = [
+
+        'contenue',
+        'articles_id',
+        'user_id',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
-    public function article() {
-        return $this->belongsTo(Articles::class);
+    public function article()
+    {
+        return $this->belongsTo(Article::class);
     }
-        use HasFactory;
-} 
+}
