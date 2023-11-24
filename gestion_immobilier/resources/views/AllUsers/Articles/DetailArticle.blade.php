@@ -74,13 +74,35 @@ button{
 
           </p>
           <div class="card-body gap-2">
-            <form action="" method="post">
-                <input type="text" name="commentaire" id=""><button  type="submit"> Ajouter un commentaire</button>
+            <form action="{{route('commentaire.store')}}" method="post">
+              @csrf
+              <input type="hidden" name="user_id" value="{{auth()->user() ? auth()->user()->id : ''}}" />
+              <input type="hidden" name="articles_id" value="{{$articles->id}}" />
+    
+              <input type="text" name="contenue" id=""><button type="submit"> Ajouter un commentaire</button>
             </form>
         </div>
          
         </div>
       </div>
+
+      <div class="row">
+        @foreach($comments as $comment)
+        <div class="col-md-4">
+          <div class="my-5">
+            <h5><b>{{$comment->user->nom}} {{$comment->user->prenom}}</b></h5>
+            <p class="card-text">{{$comment->contenue}}</p>
+            <p class="card-title">{{$comment->created_at}}</p>
+    
+            @if ($comment->user_id == auth()->user()->id)
+            <a href="{{route('commentaire.edit', $comment->id)}}" class="btn btn-sm btn-warning">Modifier</a>
+            @endif
+    
+          </div>
+        </div>
+        @endforeach
+      </div>
+
     </div>
     @endsection
 

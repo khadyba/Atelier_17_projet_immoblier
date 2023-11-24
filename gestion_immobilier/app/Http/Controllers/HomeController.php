@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Articles;
+use App\Models\Commentaire;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -42,8 +43,9 @@ class HomeController extends Controller
      */
     public function show(string $id)
     {
-        $article = Articles::findOrFail($id);
-        return view('AllUsers.Articles.DetailArticle', ['articles' => $article]);
+        $comments = Commentaire::where('articles_id', $id)->get();
+        $articles = Articles::findOrFail($id);
+        return view('AllUsers.Articles.DetailArticle', compact('articles', 'comments'));
     }
 
     /**

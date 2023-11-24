@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Commentaire;
 use Illuminate\Http\Request;
 
 class CommentaireController extends Controller
@@ -25,9 +26,21 @@ class CommentaireController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store()
+    public function store(Request $request)
     {
-        return view('Commentaire.AjouterCommentaire');
+        $comment = $request->validate([
+            'contenue' => 'required',
+            'articles_id' => 'required',
+            'user_id' => 'required',
+        ]);
+
+
+        $commentaire = Commentaire::create($comment);
+
+        if ($commentaire->save()) {
+
+            return redirect()->route('article.show',  $commentaire->articles_id);
+        }
     }
 
     /**
@@ -43,7 +56,8 @@ class CommentaireController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $commentaire = Commentaire::findOrFail($id);
+        return view('AllUsers.Articles.updateDetailArticle', compact('commentaire'));
     }
 
     /**
@@ -51,7 +65,16 @@ class CommentaireController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $comment = Commentaire::findOrFail($id);
+        $commentaire = $request->validate([
+            'contenue' => 'required',
+            'articles_id' => 'required',
+            'user_id' => 'required',
+        ]);
+
+        if ($comment->update($commentaire)) {
+            return Redirect()->route('article.show', $comment->articles_id);
+        }
     }
 
     /**

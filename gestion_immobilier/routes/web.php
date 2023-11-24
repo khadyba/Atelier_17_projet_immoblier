@@ -56,6 +56,11 @@ Route::prefix('article')->name('article.')->group(function () {
 });
 // route pour les commentaires
 
+Route::prefix('commentaires')->name('commentaire.')->group(function () {
+    Route::post('/commentaire/store/', [CommentaireController::class, 'store'])->name('store');
+    Route::get('/commentaire/edit/{id}', [CommentaireController::class, 'edit'])->name('edit');
+    Route::post('/commentaire/update/{id}', [CommentaireController::class, 'update'])->name('update');
+});
 
 
 
