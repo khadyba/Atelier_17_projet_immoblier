@@ -75,7 +75,7 @@
       <p class="card-text">
         {{$articles->description}}
       </p>
-
+      <!-- cette partie manquait-->
       <p class="card-text justify-content-space-between">
         <span><b>categorie :</b> {{$articles->categorie}}</span>
         <span style="margin-left: 15px"><b> status:</b> {{($articles->status=='off') ? 'disponible' : 'non disponible'}}</span>
