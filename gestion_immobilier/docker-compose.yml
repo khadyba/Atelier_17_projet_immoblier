@@ -1,0 +1,31 @@
+version: "3.9"
+services:
+  web:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "8085:80"
+  database:
+    image: mysql:${MYSQL_VERSION:-8.0}
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-gestion_immobilier-database-1}
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:-root_password_here}"
+    ports:
+      - "3308:3306" 
+    volumes:
+      - db-data:/var/lib/mysql:rw
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8087:80"
+    environment:
+      PMA_HOST: database
+      MYSQL_USER: ${MYSQL_USER:-root}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password_here}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-root_password_here}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-gestion_immobilier}
+
+volumes:
+  db-data:
