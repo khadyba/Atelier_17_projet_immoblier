@@ -1,6 +1,5 @@
-
 FROM webdevops/php-nginx:8.3-alpine
-# FROM php:8.2-fpm-alpine
+
 
 
 RUN apk add oniguruma-dev libxml2-dev
@@ -55,7 +54,4 @@ RUN npm run build
 RUN chmod -R 777 /app/storage/
 
 
-EXPOSE 8085
-# COPY  . /var/www/
-# COPY . .
-# WORKDIR /var/www/
+EXPOSE 8085 
