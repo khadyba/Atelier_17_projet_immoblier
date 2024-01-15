@@ -16,6 +16,9 @@ class UtilisateurController extends Controller
      */
     public function index()
     {
+        $users=User::findAll();
+     
+        return view('Admin.Utilisateur.listeUser', compact('users'));
        
     }
 

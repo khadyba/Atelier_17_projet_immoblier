@@ -154,7 +154,14 @@ if($article){
      */
     public function destroy(string $id)
     {
-        Articles::destroy($id);
-        return redirect()->route('admin.index')->with('success', 'Le bien a été supprimer');
+        $userid=Articles::findOrFail($id);
+      
+        if(auth()->user()->id === $userid->user_id){
+            Articles::destroy($id);
+            return redirect()->route('admin.index')->with('success', 'Le bien a été supprimé');
+        }else{
+            abort(403, 'Accès interdit');
+        }
+     
     }
 }

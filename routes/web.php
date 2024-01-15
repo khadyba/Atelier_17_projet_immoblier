@@ -31,6 +31,8 @@ Route::prefix('authentification')->name('user.')->group(function () {
     Route::post('/creerCompte/store', [UtilisateurController::class, 'store'])->name('store');
     Route::get('/deconnexion', [UtilisateurController::class, 'deconnexion'])->name('deconnexion');
     Route::get('/deconnexionUserLambda', [UtilisateurController::class, 'deconnexionUserLambda'])->name('deconnexionUserLambda');
+    Route::get('/listeUser', [UtilisateurController::class, 'index'])->name('index');
+
 });
 
 // Route::get('/',[AticleController::class, 'index'])->name('index')->middleware('isadmin');
@@ -41,7 +43,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/Article/store', [AticleController::class, 'store'])->name('store')->middleware(['auth', 'isadmin']);
     Route::get('/Article/editer/{id}', [AticleController::class, 'edit'])->name('edit')->middleware(['auth', 'isadmin']);
     Route::post('/Article/modifier/{id}', [AticleController::class, 'update'])->name('update')->middleware(['auth', 'isadmin']);
-    Route::post('/Article/supprimer/{id}', [AticleController::class, 'destroy'])->name('destroy')->middleware(['auth', 'isadmin']);
+    Route::delete('/Article/supprimer/{id}', [AticleController::class, 'destroy'])->name('destroy')->middleware(['auth', 'isadmin']);
     // route pour la chambre en dessous
     Route::get('/Chambre/{id}', [ChambreController::class, 'index'])->name('chambreindex')->middleware(['auth', 'isadmin']);
 
