@@ -6,8 +6,6 @@ use App\Models\User;
 use App\Models\Utilisateurs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Notifications\UserNotification;
-use App\Notifications\WelcomeNotification;
 
 class UtilisateurController extends Controller
 {
@@ -16,9 +14,6 @@ class UtilisateurController extends Controller
      */
     public function index()
     {
-        $users=User::findAll();
-     
-        return view('Admin.Utilisateur.listeUser', compact('users'));
        
     }
 
@@ -47,10 +42,7 @@ class UtilisateurController extends Controller
     
         $utilisateur = new User($validatedData);
         if ($utilisateur->save()) {
-            
-            $userEmail= User::where('email',$request->email)->first();
-            
-            $userEmail->notify(new WelcomeNotification());
+           // Utilisateurs::create($utilisateur);
         return redirect()->route('user.edit');
         }
         
